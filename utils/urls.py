@@ -30,8 +30,7 @@ def inner_url(current_url, site_url):
 
 def prefix_url(current_url, site_url_prefix):
     current_url_parse = urlparse(current_url)
-    if current_url_parse.hostname == None \
-            and current_url_parse.path[0] == '/':
+    if current_url_parse.hostname == None and current_url_parse.path[0] == '/':
         return site_url_prefix + current_url_parse.path
     else:
         return site_url_prefix + '/' + current_url_parse.path
