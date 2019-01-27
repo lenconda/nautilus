@@ -34,7 +34,3 @@ def prefix_url(current_url, site_url_prefix):
         return site_url_prefix + current_url_parse.path
     else:
         return site_url_prefix + '/' + current_url_parse.path
-
-
-if __name__ == '__main__':
-    print(check_if_url('path/to/file.html'))
