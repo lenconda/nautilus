@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
 from urllib.parse import urlparse
-from urllib.error import URLError, HTTPError
 import re
 
 def check_if_url(url):
@@ -16,7 +13,10 @@ def check_if_url(url):
                       r'(:[0-9]{1,4})?((/?)|' \
                       r'(/[0-9a-z_!~*"().;?:@&=+$,%#-]+)+/?)$'
     url_test = re.compile(url_test_regexp)
-    return url_test.match(url)
+    if url_test.match(url):
+        return True
+    else:
+        return False
 
 def inner_url(current_url, site_url):
     current_host = urlparse(current_url).hostname
@@ -37,4 +37,5 @@ def prefix_url(current_url, site_url_prefix):
         return site_url_prefix + '/' + current_url_parse.path
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    print(check_if_url('path/to/file.html'))
