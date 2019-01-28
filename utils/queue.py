@@ -10,10 +10,14 @@ class Queue:
         return self.queue
 
     def enqueue(self, url):
-        return self.visited.append(url)
+        return self.queue.append(url)
 
     def dequeue(self):
-        self.visited.reverse()
-        self.visited.pop()
-        self.visited.reverse()
-        return self.visited
+        elem = self.queue[0]
+        self.queue.reverse()
+        self.queue.pop()
+        self.queue.reverse()
+        return elem
+
+    def has(self, item):
+        return item in self.queue
