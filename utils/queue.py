@@ -4,20 +4,22 @@
 class Queue:
 
     def __init__(self):
-        self.queue = []
+        self.items = []
 
     def get(self):
-        return self.queue
+        return self.items
 
     def enqueue(self, url):
-        return self.queue.append(url)
+        return self.items.append(url)
 
     def dequeue(self):
-        elem = self.queue[0]
-        self.queue.reverse()
-        self.queue.pop()
-        self.queue.reverse()
+        self.items.reverse()
+        elem = self.items.pop()
+        self.items.reverse()
         return elem
 
     def has(self, item):
-        return item in self.queue
+        return item in self.items
+
+    def empty(self):
+        return len(self.items) == 0

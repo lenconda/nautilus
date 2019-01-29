@@ -1,14 +1,11 @@
 import pymysql
 import configparser
-import os
 
 class DBHelper:
 
     def __init__(self):
         config_file = configparser.ConfigParser()
-        config_file.read(
-            os.path.abspath(
-                os.path.join(os.getcwd(), '../', 'config.ini')))
+        config_file.read('config.ini')
         configs = config_file['DATABASE']
         self.config = {
             'host': configs['Host'],

@@ -24,8 +24,8 @@ class Urls:
             return False
 
     def inner_url(self, site_url):
-        current_host = urlparse(self.current_url).hostname
-        site_host = urlparse(site_url).hostname
+        current_host = urlparse(self.current_url).netloc
+        site_host = urlparse(site_url).netloc
         if current_host:
             if current_host == site_host:
                 return True
