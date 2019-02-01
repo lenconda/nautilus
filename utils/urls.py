@@ -2,6 +2,8 @@
 # coding=utf-8
 
 from urllib.parse import urlparse
+from url_normalize import url_normalize
+from urlobject import URLObject
 import re
 
 class Urls:
@@ -24,18 +26,23 @@ class Urls:
             return False
 
     def inner_url(self, site_url):
-        current_host = urlparse(self.current_url).netloc
-        site_host = urlparse(site_url).netloc
-        if current_host:
+        current_host = urlparse(url_normalize(self.current_url)).netloc
+        site_host = urlparse(url_normalize(site_url)).netloc
+        if current_host != '':
             if current_host == site_host:
                 return True
             else:
                 return False
-        return True
-
-    def prefix_url(self, site_url_prefix):
-        current_url_parse = urlparse(self.current_url)
-        if current_url_parse.hostname == None and current_url_parse.path[0] == '/':
-            return site_url_prefix + current_url_parse.path
         else:
-            return site_url_prefix + '/' + current_url_parse.path
+            return True
+
+    def prefix_url(self, site_url, parent_url):
+        current_url_parse = URLObject(self.current_url)
+        parent_url_parse = URLObject(url_normalize(parent_url + '/'))
+        if current_url_parse.netloc == '':
+            new_url = URLObject(site_url)\
+                .with_path(parent_url_parse.path)\
+                .relative(current_url_parse.path)
+            return url_normalize(new_url)
+        else:
+            return url_normalize(self.current_url)

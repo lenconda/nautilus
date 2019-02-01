@@ -9,4 +9,4 @@ if __name__ == '__main__':
     config.read('config.ini')
     app = LinkFolio(config['BASIC']['URL'],
                     config['BASIC']['MaxDepth'])
-    app.run()
+    app.bfs_traverse()

@@ -1,85 +1,41 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from utils import queue, urls
+from utils.urls import Urls
+from utils.queue import Queue
 from bs4 import BeautifulSoup
-from urllib import request, error, parse
 from dbhelper.main import DBHelper
 import time
-from fake_useragent import UserAgent
+import requests
 
 class LinkFolio:
 
     def __init__(self, url, max_depth):
-        self.visited_queue = queue.Queue()
-        self.unvisited_queue = queue.Queue()
-        self.url = url
-        self.max_depth = max_depth
+        self.seed_url = url
+        self.result_urls = []
+        self.queue = Queue()
+        self.max_depth = int(max_depth)
+        self.cur_depth = 1
         self.db = DBHelper()
 
-    def soup_generate(self, url):
-        ua = UserAgent()
-        headers = { 'User-Agent': ua.random }
-        req = request.Request(url, headers = headers)
-        html_response = request.urlopen(req)
-        if html_response is None:
-            print('URL is not correct...')
-            soup = BeautifulSoup('', 'html.parser')
-            return soup
-        else:
-            soup = BeautifulSoup(html_response.read(), 'html.parser')
-            return soup
+    def bfs_traverse(self):
+        self.queue.enqueue(self.seed_url)
+        while len(self.queue.get()) != 0 and self.cur_depth < 6:
+            for i in range(0, len(self.queue.get())):
+                current_url = self.queue.dequeue()
+                time.sleep(1)
+                html_response = requests.get(current_url).text
+                soup = BeautifulSoup(html_response, 'html.parser')
+                links = soup.find_all('a', { 'href': True })
 
-    def get_all_links(self, link):
-        soup = self.soup_generate(link)
-        links = []
-        for link in soup.find_all('a', { 'href': True }):
-            links.append(link['href'])
-        return links
-
-    def get_inner_links(self, all_links):
-        inner_links = []
-        for link in all_links:
-            if parse.urlparse(link).netloc == '':
-                inner_links.append(
-                    urls.Urls(link).prefix_url(self.url))
-            else:
-                if urls.Urls(link).inner_url(self.url):
-                    inner_links.append(link)
-        return inner_links
-
-    def get_link_page_content(self, link):
-        soup = self.soup_generate(link)
-        content = soup.body.get_text()
-        return content
-
-    def get_link_page_title(self, link):
-        soup = self.soup_generate(link)
-        title = soup.title.get_text()
-        return title
-
-    def fetch(self):
-        url = self.unvisited_queue.get()[0]
-        print('[+] Get URL: ' + url)
-        if urls.Urls(url).check_if_url():
-            self.visited_queue.enqueue(url)
-            all_links = self.get_all_links(url)
-            inner_links = self.get_inner_links(all_links)
-            for link in inner_links:
-                if not self.visited_queue.has(link) \
-                        and not self.unvisited_queue.has(link):
-                    self.unvisited_queue.enqueue(link)
-                    content = self.get_link_page_content(link)[0: 100]
-                    title = self.get_link_page_title(link)
-                    timestamp = int(round(time.time()) * 1000)
-                    values = (link, title, content, timestamp)
-                    self.db.insert_item(values)
-            self.unvisited_queue.dequeue()
-        else:
-            print('URL is illegal...')
-        if self.unvisited_queue:
-            self.fetch()
-
-    def run(self):
-        self.unvisited_queue.enqueue(self.url)
-        self.fetch()
+                for item in links:
+                    link = item.get('href')
+                    url_resolver = Urls(link)
+                    if url_resolver.check_if_url() \
+                        and url_resolver.inner_url(self.seed_url):
+                        prefixed_url = url_resolver.prefix_url(self.seed_url, link)
+                        if prefixed_url not in self.result_urls:
+                            self.result_urls.append(prefixed_url)
+                            self.queue.enqueue(prefixed_url)
+                            print('GET URL: ' + prefixed_url)
+            self.cur_depth += 1

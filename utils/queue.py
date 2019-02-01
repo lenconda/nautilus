@@ -10,7 +10,8 @@ class Queue:
         return self.items
 
     def enqueue(self, url):
-        return self.items.append(url)
+        self.items.append(url)
+        return url
 
     def dequeue(self):
         self.items.reverse()
