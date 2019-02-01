@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from dbhelper.main import DBHelper
 import time
 import requests
+from utils.logger import get_logger
 
 class LinkFolio:
 
@@ -17,6 +18,7 @@ class LinkFolio:
         self.max_depth = int(max_depth)
         self.cur_depth = 1
         self.db = DBHelper()
+        self.logger = get_logger(__name__)
 
     def bfs_traverse(self):
         self.queue.enqueue(self.seed_url)
@@ -37,5 +39,5 @@ class LinkFolio:
                         if prefixed_url not in self.result_urls:
                             self.result_urls.append(prefixed_url)
                             self.queue.enqueue(prefixed_url)
-                            print('GET URL: ' + prefixed_url)
+                            self.logger.info('GET URL: ' + prefixed_url)
             self.cur_depth += 1
