@@ -37,6 +37,15 @@ class LinkFolio:
                         and url_resolver.inner_url(self.seed_url):
                         prefixed_url = url_resolver.prefix_url(self.seed_url, link)
                         if prefixed_url not in self.result_urls:
+                            response_text = requests.get(prefixed_url).text
+                            response_parse = BeautifulSoup(response_text, 'html.parser')
+                            title = response_parse.title.get_text().strip()
+                            [s.extract() for s in response_parse('script')]
+                            [s.extract() for s in response_parse('style')]
+                            content = response_parse.body.get_text().replace(' ', '')[0: 4096]
+                            timestamp = str(int(round(time.time()) * 1000))
+                            values = (prefixed_url, title, content, timestamp)
+                            self.db.insert_item(values)
                             self.result_urls.append(prefixed_url)
                             self.queue.enqueue(prefixed_url)
                             self.logger.info('GET URL: ' + prefixed_url)

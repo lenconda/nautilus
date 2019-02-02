@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 import pymysql
 import configparser
 
@@ -16,17 +19,19 @@ class DBHelper:
             'charset': configs['Charset'],
             'cursorclass': pymysql.cursors.DictCursor
         }
-        self.connection = pymysql.connect(**self.config)
-        self.cursor = self.connection.cursor()
 
     def insert_item(self, values):
-        sql = '''
-            INSERT INTO `data` (`url`, `title`, `content`, `time`)
-            VALUES (%s, %s, %s, %s)
-        '''
+        connection = pymysql.connect(**self.config)
+        connection.ping(reconnect = True)
         try:
-            self.cursor.execute(sql, values)
-            self.connection.commit()
+            with connection.cursor() as cursor:
+                sql = '''
+                    INSERT INTO `data` (`url`, `title`, `content`, `time`)
+                    VALUES (%s, %s, %s, %s)
+                '''
+                cursor.execute(sql, values)
+            connection.commit()
         except:
-            self.connection.rollback()
-        self.connection.close()
+            pass
+        finally:
+            connection.close()
