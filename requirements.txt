@@ -7,7 +7,6 @@ PyMySQL==0.9.3
 requests==2.21.0
 six==1.12.0
 soupsieve==1.7.3
-SQLAlchemy==1.2.17
 url-normalize==1.4.1
 urllib3==1.24.1
 URLObject==2.4.3
