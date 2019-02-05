@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `data`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `title` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `time` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `url` varchar(128) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `title` varchar(128) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `content` mediumtext CHARACTER SET utf8mb4,
+  `time` varchar(13) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
