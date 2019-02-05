@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from linkfolio.main import LinkFolio
-import configparser
+from linkfolio.linkfolio import LinkFolio
+from utils.config import SEED_URL, MAX_DEPTH
 
 if __name__ == '__main__':
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    app = LinkFolio(config['BASIC']['URL'],
-                    config['BASIC']['MaxDepth'])
-    app.bfs_traverse()
+    app = LinkFolio(url = SEED_URL, max_depth = MAX_DEPTH)
+    app.run()

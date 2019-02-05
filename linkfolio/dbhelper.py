@@ -2,21 +2,20 @@
 # coding=utf-8
 
 import pymysql
-import configparser
+import sys
+sys.path.append('..')
+from utils.config import *
 
 class DBHelper:
 
     def __init__(self):
-        config_file = configparser.ConfigParser()
-        config_file.read('config.ini')
-        configs = config_file['DATABASE']
         self.config = {
-            'host': configs['Host'],
-            'port': int(configs['Port']),
-            'user': configs['User'],
-            'password': configs['Password'],
-            'db': configs['Database'],
-            'charset': configs['Charset'],
+            'host': DB_HOST,
+            'port': DB_PORT,
+            'user': DB_USER,
+            'password': DB_PASSWORD,
+            'db': DB_DATABASE,
+            'charset': DB_CHARSET,
             'cursorclass': pymysql.cursors.DictCursor
         }
 
