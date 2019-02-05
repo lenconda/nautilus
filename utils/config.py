@@ -18,7 +18,7 @@ SEED_URL = envs.get('SEED_URL') \
 DB_HOST = envs.get('DB_HOST') \
           or config['database']['host'] \
           or '127.0.0.1'
-DB_PORT = int(envs.get('DB_PORT')) \
+DB_PORT = (envs.get('DB_PORT') and int(envs.get('DB_PORT'))) \
           or int(config['database']['port']) or 3306
 DB_USER = envs.get('DB_USER') \
           or config['database']['user'] or 'root'
