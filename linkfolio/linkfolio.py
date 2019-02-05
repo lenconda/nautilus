@@ -22,7 +22,7 @@ class LinkFolio:
 
     def bfs_traverse(self):
         self.queue.enqueue(self.seed_url)
-        while len(self.queue.get()) != 0 and self.cur_depth < self.max_depth:
+        while self.cur_depth < self.max_depth:
             try:
                 for i in range(0, len(self.queue.get())):
                     current_url = self.queue.dequeue()
