@@ -13,6 +13,6 @@ TIMEOUT = (envs.get('TIMEOUT') and int(envs.get('TIMEOUT'))) or 60
 DB_HOST = envs.get('DB_HOST') or '127.0.0.1'
 DB_PORT = (envs.get('DB_PORT') and int(envs.get('DB_PORT'))) or 3306
 DB_USER = envs.get('DB_USER') or 'root'
-DB_PASSWORD = envs.get('DB_PASSWORD') or '123'
+DB_PASSWORD = envs.get('DB_PASSWORD') or ''
 DB_DATABASE = envs.get('DB_DATABASE') or 'nautilus'
 DB_CHARSET = envs.get('DB_CHARSET') or 'utf8mb4'
