@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.22, for osx10.13 (x86_64)
 --
--- Host: 127.0.0.1    Database: linkfolio
+-- Host: 127.0.0.1    Database: nautilus
 -- ------------------------------------------------------
 -- Server version	8.0.13
 
@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `data`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(128) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `title` varchar(128) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `content` mediumtext CHARACTER SET utf8mb4,
-  `time` varchar(13) CHARACTER SET utf8mb4 NOT NULL,
+  `url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `filename` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `time` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-02 18:08:05
+-- Dump completed on 2019-02-04 16:53:40

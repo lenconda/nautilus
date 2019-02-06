@@ -25,7 +25,7 @@ class DBHelper:
         try:
             with connection.cursor() as cursor:
                 sql = '''
-                    INSERT INTO `data` (`url`, `title`, `content`, `time`)
+                    INSERT INTO `data` (`url`, `filename`, `content`, `time`)
                     VALUES (%s, %s, %s, %s)
                 '''
                 cursor.execute(sql, values)
