@@ -1,12 +1,8 @@
 # coding=utf-8
 
-import configparser
 import os
 
 envs = os.environ
-
-config = configparser.ConfigParser()
-config.read('config.ini')
 
 # application configs
 MAX_DEPTH = (envs.get('MAX_DEPTH') and int(envs.get('MAX_DEPTH'))) or 16
