@@ -13,6 +13,8 @@ MAX_DEPTH = config['basic']['max_depth'] or 16
 SEED_URL = envs.get('SEED_URL') \
            or config['basic']['seed_url'] \
            or 'http://www.example.com'
+TIMEOUT = (envs.get('TIMEOUT') and int(envs.get('TIMEOUT'))) \
+          or int(config['basic']['timeout']) or 10
 
 # database configs
 DB_HOST = envs.get('DB_HOST') \
