@@ -29,10 +29,7 @@ class Urls:
         current_host = urlparse(url_normalize(self.current_url)).netloc
         site_host = urlparse(url_normalize(site_url)).netloc
         if current_host != '':
-            if current_host == site_host:
-                return True
-            else:
-                return False
+            return current_host == site_host
         else:
             return True
 
