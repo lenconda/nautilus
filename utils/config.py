@@ -9,7 +9,8 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # application configs
-MAX_DEPTH = config['basic']['max_depth'] or 16
+MAX_DEPTH = (envs.get('MAX_DEPTH') and int(envs.get('MAX_DEPTH'))) \
+            or config['basic']['max_depth'] or 16
 SEED_URL = envs.get('SEED_URL') \
            or config['basic']['seed_url'] \
            or 'http://www.example.com'
