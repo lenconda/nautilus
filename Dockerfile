@@ -5,4 +5,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN rm -f ./utils/config.py
 RUN mv ./utils/config.docker.py ./utils/config.py
+RUN cat ./utils/config.py
 CMD ["python", "./run.py"]
